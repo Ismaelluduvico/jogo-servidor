@@ -6,6 +6,10 @@ const controller = require('../controllers/UsuarioController');
 router.post('/cadastro', controller.cadastroUsuario);
 //Rota buscar dados do usuario
 router.get('/:id', controller.buscarUsuario);
+
+//Rota buscar dados do usuario Alunos
+router.get('/todosalunos/:tipo', controller.buscarUsuarioAluno);
+
 // Rota de atualização
 router.put('/:id', controller.updateUsuario);
 //Rota Deletar

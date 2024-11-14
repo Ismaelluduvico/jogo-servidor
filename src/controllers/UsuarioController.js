@@ -26,6 +26,15 @@ exports.buscarUsuario = async(req, res, next) => {
     }
 };
 
+exports.buscarUsuarioAluno = async(req, res, next) => {
+    try {
+        const {tipo} = req.params;
+        const usuario = await UsuarioService.buscarUsuarioAluno(tipo)
+        res.json(usuario)
+    } catch (error) {
+        
+    }
+};
 //Alualizar usuario
 exports.updateUsuario = async(req, res, next) => {
     try {

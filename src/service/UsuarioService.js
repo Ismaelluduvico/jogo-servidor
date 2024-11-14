@@ -9,6 +9,10 @@ exports.buscarUsuario = function (id) {
     return UsuarioData.buscarUsuario(id);
 };
 
+exports.buscarUsuarioAluno = function (tipo) {
+    return UsuarioData.buscarUsuarioAluno(tipo);
+};
+
 exports.checkPassword = function (nomeUsuario, senha) {
     return UsuarioData.checkPassword(nomeUsuario, senha);
 }

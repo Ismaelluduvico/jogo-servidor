@@ -3,8 +3,8 @@ const questoesService = require('../service/QuestaoService')
 //Adicionar uma questao
 exports.postQuestao = async (req, res, next) => {
     const {enuciado, dificuldade, topicoid} = req.body
-    await questoesService.addQuestao(enuciado, dificuldade, topicoid)
-    res.status(201). send("Adicionado com sucesso")
+    const id = await questoesService.addQuestao(enuciado, dificuldade, topicoid)
+    res.status(201).send(id)
 };
 
 //Buscar todas as questoes

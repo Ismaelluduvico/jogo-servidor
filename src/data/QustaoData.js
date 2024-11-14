@@ -14,7 +14,8 @@ exports.buscarQuestao = function (id) {
 
 //Adicionar uma nova questao
 exports.addQuestao = function (enuciado, dificuldade, topicoid){
-    return database.query(`insert into questao (enuciado, dificuldade, topicoid) values ('${enuciado}', '${dificuldade}', '${topicoid}')`);
+    const insertQuestao = database.query(`insert into questao (enuciado, dificuldade, topicoid) values ('${enuciado}', '${dificuldade}', '${topicoid}') RETURNING id`);
+    return insertQuestao
 };
 
 //Atualizar questao

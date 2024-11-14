@@ -25,6 +25,11 @@ exports.buscarUsuario = function (id) {
     return database.query(`select * from usuarios where id = ${id}`)
 };
 
+//Pegar informações do usuario Aluno
+exports.buscarUsuarioAluno = function (tipo) {
+    return database.query('select * from usuarios where tipousuario = $1', [tipo])
+};
+
 //Checar senha
 exports.checkPassword = function (nomeusuario, senha) {
     return database.query('select * from usuarios where nomeusuario = $1 and senha = $2', [nomeusuario, senha]);
