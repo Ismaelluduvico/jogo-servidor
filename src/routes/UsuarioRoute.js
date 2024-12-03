@@ -4,6 +4,7 @@ const controller = require('../controllers/UsuarioController');
 
 //Rota de cadastro
 router.post('/cadastro', controller.cadastroUsuario);
+
 //Rota buscar dados do usuario
 router.get('/:id', controller.buscarUsuario);
 

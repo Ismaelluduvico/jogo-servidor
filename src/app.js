@@ -25,7 +25,7 @@ app.use('/auth', AuthRoute);
 
 
 //Rota de Usúario
-app.use('/usuario', UsuarioRoute);
+app.use('/usuario', CheckToken, UsuarioRoute);
 //Rota questao
 app.use('/questao', QuestaoRoute);
 //Rota topico

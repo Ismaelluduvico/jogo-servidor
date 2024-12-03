@@ -25,7 +25,7 @@ exports.buscarUsuario = function (id) {
     return database.query(`select * from usuarios where id = ${id}`)
 };
 
-//Pegar informações do usuario Aluno
+//Pegar informações dos usuarios Aluno
 exports.buscarUsuarioAluno = function (tipo) {
     return database.query('select * from usuarios where tipousuario = $1', [tipo])
 };
@@ -42,7 +42,7 @@ exports.updateUsuario = function ({ id, nomeusuario, senha, turma, nomecompleto,
             return {status: 400, msg: "Nome de usuario já existe"};
         } else {
             return database.query(`update usuarios set nomeusuario = '${nomeusuario}', senha = '${senha}', turma = '${turma}', 
-                nomecompleto = '${nomecompleto}', tipousuario = '${tipo}' where id = ${id}`).then(() => {
+                nomecompleto = '${nomecompleto}' where id = ${id}`).then(() => {
                 return {status: 200, msg: "Usuário criado com sucesso"};
                 }).catch(err => {
                     return {status: 500, msg: "Erro ao criar usuário", error: err};

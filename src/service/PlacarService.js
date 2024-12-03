@@ -1,13 +1,13 @@
 const placarData = require('../data/PlacarData')
 
 //serviço de mostrar todos os placares
- exports.getPlacares = function () {
-    return placarData.getPlacares();
+ exports.getResultados = function () {
+    return placarData.getResultados();
  };
 
 //serviço de adicionar um placar
- exports.addPlacar = function (pontos, aluno_id, capitulo_id, acertos, performance) {
-    return placarData.addPlacar(pontos, aluno_id, capitulo_id, acertos, performance);
+ exports.addResultado = function (dificuldade, questoescorretas, questoeserradas, usuarioid) {
+    return placarData.addResultado(dificuldade, questoescorretas, questoeserradas, usuarioid);
  };
 
 //serviço de mostrar um placar
@@ -15,12 +15,22 @@ const placarData = require('../data/PlacarData')
    return placarData.showPlacar(id);
  };
 
+ //serviço de mostrar placr por dificuldade
+ exports.resultadoPorDificuldade = function (dificuldade) {
+   return placarData.resultadoPorDificuldade(dificuldade);
+ };
+
+ //serviço de mostrar placr por usuario
+ exports.resultadoPorUsuario = function (usuarioid) {
+   return placarData.resultadoPorUsuario(usuarioid);
+ };
+
  //serviço de atualizar um placar
- exports.updatePlacar = function (dados) {
-    return placarData.updatePlacar(dados);
+ exports.updateResultado = function (dados) {
+    return placarData.updateResultado(dados);
  };
 
  //serviço de deletar um placar
- exports.deletePlacar = function (id) {
-   return placarData.deletePlacar(id);
+ exports.deleteResultado = function (id) {
+   return placarData.deleteResultado(id);
  }

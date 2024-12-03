@@ -1,31 +1,46 @@
 const placarService = require('../service/PlacarService')
 
 //Adicionar um placar
-exports.postPlacar = async (req, res, next) => {
-    const {pontos, aluno_id, capitulo_id, acertos, performance} = req.body
-    await placarService.addPlacar(pontos, aluno_id, capitulo_id, acertos, performance)
+exports.addResultado = async (req, res, next) => {
+    const {dificuldade, questoescorretas, questoeserradas, usuarioid} = req.body
+    await placarService.addResultado(dificuldade, questoescorretas, questoeserradas, usuarioid)
     res.status(201). send("")
 };
 
 //Buscar todos os placares
-exports.getPlacar = async(req, res, next) => {
-    const placares = await placarService.getPlacares()
+exports.getResultados = async(req, res, next) => {
+    const placares = await placarService.getResultados()
     res.json(placares)
 };
 
-//Buscar um placar
-exports.getOnePlacar = async(req, res, next) => {
-    const id = req.params.id;
-    const placar = await placarService.showPlacar(id)
-    res.json(placar)
+//Buscarplacra por dificuldade
+exports.resultadoPorDificuldade = async(req, res, next) => {
+    try {
+        const {dificuldade} = req.params;
+        const resultado = await placarService.resultadoPorDificuldade(dificuldade)
+        res.json(resultado)
+    } catch (error) {
+        
+    }
+};
+
+//Buscar placra por usuario
+exports.resultadoPorUsuario = async(req, res, next) => {
+    try {
+        const {usuarioid} = req.params;
+        const resultado = await placarService.resultadoPorUsuario(usuarioid)
+        res.json(resultado)
+    } catch (error) {
+        
+    }
 };
 
 //Atuzlizar um placar
-exports.putPlacar = async(req, res, next) => {
+exports.updateResultado = async(req, res, next) => {
     try {
         const id = req.params.id;
     const dados = req.body;
-    await placarService.updatePlacar({...dados, id: id})
+    await placarService.updateResultado({...dados, id:id})
 
     res.status(201).send(`Requisição recebida com sucesso! ${id}`);
     } catch (error) {
@@ -34,10 +49,10 @@ exports.putPlacar = async(req, res, next) => {
     }
 };
 //Deletetar um placar
-exports.deletePlacar = async(req, res, next) => {
+exports.deleteResultado = async(req, res, next) => {
     try {
         const id = req.params.id;
-        await placarService.deletePlacar(id)
+        await placarService.deleteResultado(id)
         res.status(200).send(`Requisição recebida com sucesso! ${id}`);
     } catch (error){
         console.log(error)
