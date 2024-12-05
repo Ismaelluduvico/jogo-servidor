@@ -20,6 +20,11 @@ const placarData = require('../data/PlacarData')
    return placarData.resultadoPorDificuldade(dificuldade);
  };
 
+ //serviço de mostrar placr por dificuldade
+ exports.resultadoPorDificuldadeUsuario = function (dificuldade, usuarioid) {
+  return placarData.resultadoPorDificuldadeUsuario(dificuldade, usuarioid);
+};
+
  //serviço de mostrar placr por usuario
  exports.resultadoPorUsuario = function (usuarioid) {
    return placarData.resultadoPorUsuario(usuarioid);
