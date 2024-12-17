@@ -12,6 +12,12 @@ exports.buscarQuestao = function (id) {
     return database.query(`select * from questao where id = ${id}`)
 };
 
+//Buscar todas as questões por dificuldade
+//Buscar uma questão
+exports.buscarQuestaoDificuldade = function (dificuldade) {
+    return database.query(`select * from questao where dificuldade = $1`, [dificuldade])
+};
+
 //Adicionar uma nova questao
 exports.addQuestao = function (enuciado, dificuldade, topicoid){
     const insertQuestao = database.query(`insert into questao (enuciado, dificuldade, topicoid) values ('${enuciado}', '${dificuldade}', '${topicoid}') RETURNING id`);

@@ -27,12 +27,12 @@ app.use('/auth', AuthRoute);
 //Rota de Usúario
 app.use('/usuario', CheckToken, UsuarioRoute);
 //Rota questao
-app.use('/questao', QuestaoRoute);
+app.use('/questao', CheckToken, QuestaoRoute);
 //Rota topico
-app.use('/topicos', TopicoRoute);
+app.use('/topicos', CheckToken, TopicoRoute);
 //Rota para alternativa
-app.use('/alternativa', AlternativaRoute);
+app.use('/alternativa', CheckToken, AlternativaRoute);
 //Rota para placar
-app.use('/placar', PlacarRoute);
+app.use('/placar', CheckToken, PlacarRoute);
 
 module.exports = app;

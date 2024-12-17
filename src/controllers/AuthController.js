@@ -15,7 +15,9 @@ exports.login = async (req, res) => {
     const dadosUsuario = {
         id: result.id,
         nomeusuario: result.nomeusuario,
-        tipo: result.tipousuario
+        tipo: result.tipousuario,
+        turma: result.turma,
+        nomecompleto: result.nomecompleto
     };
     const chavePrivada = "senhateste";
     jwt.sign(dadosUsuario, chavePrivada, { expiresIn: '240h' }, (err, token) => {
@@ -26,3 +28,25 @@ exports.login = async (req, res) => {
         res.status(200).json({ token });
     });
 };
+
+exports.updateUser = async (req, res) => {
+    const { nomeusuario, senha, novasenha, turma, nomecompleto, userId} = req.body;
+
+    const [result] = await UsuarioService.checkPasswordById(userId, senha);
+
+    if (!result) {
+        res.status(401).json({ error: true, message: "Usuário ou senha inválidos" });
+        return;
+    }
+    const params = {
+        id: userId,
+        nomeusuario,
+        nomecompleto,
+        novasenha,
+        turma,
+        tipo: result.tipousuario
+    }
+    console.log(params)
+    await UsuarioService.updateUsuario(params);
+    res.status(200).json({ success: true });
+}

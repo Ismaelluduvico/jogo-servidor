@@ -18,8 +18,8 @@ exports.cadastroUsuario = async (req, res) => {
 //Buscar usuario
 exports.buscarUsuario = async(req, res, next) => {
     try {
-        const {id} = req.params;
-        const usuario = await UsuarioService.buscarUsuario(id)
+        const {userId} = req.body;
+        const usuario = await UsuarioService.buscarUsuario(userId)
         res.json(usuario)
     } catch (error) {
         
@@ -38,9 +38,9 @@ exports.buscarUsuarioAluno = async(req, res, next) => {
 //Alualizar usuario
 exports.updateUsuario = async(req, res, next) => {
     try {
-        const id = req.params.id;
+        const {userId} = req.body;
         const dados = req.body;
-        const result = await UsuarioService.updateUsuario({...dados, id: id});
+        const result = await UsuarioService.updateUsuario({...dados, id: userId});
         if (typeof result === "object" && result.status) {
             return res.status(result.status).send(result.msg);
         }
@@ -53,9 +53,9 @@ exports.updateUsuario = async(req, res, next) => {
 //Deletar usuario
 exports.deleteUsuario = async(req, res, next) => {
     try {
-        const id = req.params.id;
-        await UsuarioService.deleteUsuario(id)
-        res.status(200).send(`Requisição recebida com sucesso! ${id}`);
+        const {userId} = req.body;
+        await UsuarioService.deleteUsuario(userId)
+        res.status(200).send(`Requisição recebida com sucesso! ${userId}`);
     } catch (error){
         console.log(error)
         res.status(500).send("ocorreu um erro")

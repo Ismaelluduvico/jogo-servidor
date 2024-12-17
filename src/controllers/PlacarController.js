@@ -2,22 +2,92 @@ const placarService = require('../service/PlacarService')
 
 //Adicionar um placar
 exports.addResultado = async (req, res, next) => {
-    const { dificuldade, questoescorretas, questoeserradas, usuarioid } = req.body
-    // await placarService.addResultado(dificuldade, questoescorretas, questoeserradas, usuarioid)
-    // 
-    const reslutado = await placarService.resultadoPorDificuldadeUsuario(dificuldade, usuarioid)
-    console.log(reslutado)
-    switch (reslutado[0]) {
-        case undefined:
-            await placarService.addResultado(dificuldade, questoescorretas, questoeserradas, usuarioid)
-            break;
-        default:
-            if (reslutado[0].questoescorretas < parseInt(questoescorretas)) {
-                await placarService.updateResultado({ ...reslutado[0], questoescorretas, questoeserradas})
-            }
-            break;
+    try {
+        // Input validation
+        const { dificuldade, questoescorretas, questoeserradas, userId:  usuarioid } = req.body;
+
+        // Validate required fields
+        if (!dificuldade || usuarioid === undefined || 
+            questoescorretas === undefined || questoeserradas === undefined) {
+            return res.status(400).json({ 
+                message: 'Campos obrigatórios estão faltando' 
+            });
+        }
+
+        // Validate data types and ranges
+        if (!['Facil', 'Medio', 'Dificil'].includes(dificuldade)) {
+            return res.status(400).json({ 
+                message: 'Nível de dificuldade inválido' 
+            });
+        }
+
+        const parsedCorretas = parseInt(questoescorretas);
+        const parsedErradas = parseInt(questoeserradas);
+
+        if (isNaN(parsedCorretas) || isNaN(parsedErradas) || 
+            parsedCorretas < 0 || parsedErradas < 0) {
+            return res.status(400).json({ 
+                message: 'Valores de respostas inválidos' 
+            });
+        }
+
+        // Fetch existing result for the user and difficulty level
+        const resultadoExistente = await placarService.resultadoPorDificuldadeUsuario(
+            dificuldade, 
+            usuarioid
+        );
+
+        // No existing result - create new record
+        if (!resultadoExistente || resultadoExistente.length === 0) {
+            await placarService.addResultado(
+                dificuldade, 
+                parsedCorretas, 
+                parsedErradas, 
+                usuarioid
+            );
+
+            return res.status(201).json({ 
+                message: 'Novo resultado adicionado com sucesso' 
+            });
+        }
+
+        // Compare with existing result - update if new result is better
+        const resultadoAtual = resultadoExistente[0];
+        if (parsedCorretas > resultadoAtual.questoescorretas) {
+            await placarService.updateResultado({
+                ...resultadoAtual,
+                questoescorretas: parsedCorretas,
+                questoeserradas: parsedErradas
+            });
+
+            return res.status(200).json({ 
+                message: 'Resultado atualizado com sucesso' 
+            });
+        }
+
+        // If no update is needed, still return a success response
+        return res.status(200).json({ 
+            message: 'Resultado mantido' 
+        });
+
+    } catch (error) {
+        // Centralized error handling
+        console.error('Erro ao processar resultado:', error);
+        
+        // Diferencia entre erros de banco de dados e outros
+        if (error.name === 'DatabaseError') {
+            return res.status(500).json({ 
+                message: 'Erro no banco de dados', 
+                details: error.message 
+            });
+        }
+
+        // Erro genérico
+        return res.status(500).json({ 
+            message: 'Erro interno do servidor', 
+            details: 'Não foi possível processar o resultado' 
+        });
     }
-    res.status(201).send("")
 };
 
 //Buscar todos os placares

@@ -10,6 +10,11 @@ const questoesData = require('../data/QustaoData')
    return questoesData.buscarQuestao(id);
 };
 
+//serviço de mostra questões por dificuldade
+exports.buscarQuestaoDificuldade = function (dificuldade) {
+   return questoesData.buscarQuestaoDificuldade(dificuldade);
+};
+
 //serviço de adicionar uma questão
  exports.addQuestao = function (enuciado, dificuldade, topicoid) {
     return questoesData.addQuestao(enuciado, dificuldade, topicoid);

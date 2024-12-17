@@ -24,6 +24,17 @@ exports.buscarQuestao = async(req, res, next) => {
     }
 };
 
+//Buscar questões por dificuldade
+exports.buscarQuestaoDificuldade = async(req, res, next) => {
+    try {
+        const {dificuldade} = req.params;
+        const reslutado = await questoesService.buscarQuestaoDificuldade(dificuldade);
+        res.json(reslutado)
+    } catch (error) {
+        
+    }
+}
+
 //Atuzlizar uma questao
 exports.putQuestao = async(req, res, next) => {
     try {

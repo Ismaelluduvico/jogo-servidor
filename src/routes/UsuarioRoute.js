@@ -1,19 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/UsuarioController');
+const checkToken = require('../middlewares/checkToken');
+const addUserId = require('../middlewares/addUserId');
 
 //Rota de cadastro
 router.post('/cadastro', controller.cadastroUsuario);
 
 //Rota buscar dados do usuario
-router.get('/:id', controller.buscarUsuario);
+router.get('/', checkToken, addUserId, controller.buscarUsuario);
 
 //Rota buscar dados do usuario Alunos
-router.get('/todosalunos/:tipo', controller.buscarUsuarioAluno);
+router.get('/todosalunos/:tipo', checkToken, controller.buscarUsuarioAluno);
 
 // Rota de atualização
-router.put('/:id', controller.updateUsuario);
+router.put('/', checkToken, addUserId, controller.updateUsuario);
 //Rota Deletar
-router.delete('/:id', controller.deleteUsuario);
+router.delete('/', checkToken, addUserId, controller.deleteUsuario);
 
 module.exports = router;

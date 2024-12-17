@@ -2,9 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/PlacarController');
+const addUserId = require('../middlewares/addUserId');
 
 //Rota de adicionar um placar
-router.post('/', controller.addResultado);
+router.post('/', addUserId, controller.addResultado);
 
 //Rota de mostrar todos os placares 
 router.get('/', controller.getResultados);

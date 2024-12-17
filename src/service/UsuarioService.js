@@ -5,6 +5,7 @@ exports.novoUsuario = async function (nomeusuario, senha, turma, nomecompleto, t
     return result
 };
 
+//Buscar usuario
 exports.buscarUsuario = function (id) {
     return UsuarioData.buscarUsuario(id);
 };
@@ -17,8 +18,12 @@ exports.checkPassword = function (nomeUsuario, senha) {
     return UsuarioData.checkPassword(nomeUsuario, senha);
 }
 
-exports.updateUsuario = async function (nomeusuario, senha, turma, nomecompleto, tipo) {
-    const result = await UsuarioData.updateUsuario(nomeusuario, senha, turma, nomecompleto, tipo);
+exports.checkPasswordById = function (id, senha) {
+    return UsuarioData.checkPasswordById(id, senha);
+}
+
+exports.updateUsuario = async function (params) {
+    const result = await UsuarioData.updateUsuario(params);
     result
 }
 

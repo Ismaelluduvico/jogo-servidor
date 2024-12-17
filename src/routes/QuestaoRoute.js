@@ -9,6 +9,9 @@ router.post('/', controller.postQuestao);
 //Rota de mostrar todas as questões 
 router.get('/', controller.getQuestoes);
 
+//Rota de buscar todos as questões por dificuldade
+router.get('/dificuldade/:dificuldade', controller.buscarQuestaoDificuldade);
+
 //Rota de mostrar uma questão 
 router.get('/:id', controller.buscarQuestao);
 
