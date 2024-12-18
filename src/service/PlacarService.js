@@ -26,8 +26,8 @@ const placarData = require('../data/PlacarData')
 };
 
  //serviço de mostrar placr por usuario
- exports.resultadoPorUsuario = function (usuarioid) {
-   return placarData.resultadoPorUsuario(usuarioid);
+ exports.resultadoPorUsuario = function (userId) {
+   return placarData.resultadoPorUsuario(userId);
  };
 
  //serviço de atualizar um placar

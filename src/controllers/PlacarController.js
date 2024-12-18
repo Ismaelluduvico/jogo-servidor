@@ -110,11 +110,18 @@ exports.resultadoPorDificuldade = async (req, res, next) => {
 //Buscar placra por usuario
 exports.resultadoPorUsuario = async (req, res, next) => {
     try {
-        const { usuarioid } = req.params;
-        const resultado = await placarService.resultadoPorUsuario(usuarioid)
+        // Correct way to extract usuarioid from params
+        const { userId } = req.params;
+        
+        const resultado = await placarService.resultadoPorUsuario(userId)
         res.json(resultado)
     } catch (error) {
-
+        // It's important to handle errors
+        console.error('Erro ao buscar resultados:', error);
+        res.status(500).json({ 
+            message: 'Erro ao buscar resultados', 
+            error: error.message 
+        });
     }
 };
 

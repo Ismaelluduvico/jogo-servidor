@@ -25,8 +25,8 @@ where r.dificuldade = $1 and u.id = $2`, [dificuldade, usuarioid]);
 };
 
 //Mostra resultado por usuario
-exports.resultadoPorUsuario = function (usuarioid){
-    return database.query(`select * from resultado where usuarioid = ${usuarioid}`);
+exports.resultadoPorUsuario = function (userId){
+    return database.query(`select * from resultado where usuarioid = ${userId}`);
 };
 
 //Adicionar um novo resultado

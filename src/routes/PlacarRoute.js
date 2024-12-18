@@ -14,7 +14,7 @@ router.get('/', controller.getResultados);
 router.get('/:dificuldade', controller.resultadoPorDificuldade);
 
 //Rota de mostra placar por usuario
-router.get('/reslutado/:usuarioid', controller.resultadoPorUsuario);
+router.get('/reslutado/:userId', controller.resultadoPorUsuario);
 
 //Rota de atualizar um placar
 router.put('/:id', controller.updateResultado);
