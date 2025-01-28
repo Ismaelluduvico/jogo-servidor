@@ -11,11 +11,21 @@ router.post('/cadastro', controller.cadastroUsuario);
 router.get('/', checkToken, addUserId, controller.buscarUsuario);
 
 //Rota buscar dados do usuario Alunos
+router.get('/dadosaluno/:id', checkToken, controller.buscarDetalheAluno);
+
+//Rota buscar dados do usuario Alunos
 router.get('/todosalunos/:tipo', checkToken, controller.buscarUsuarioAluno);
 
 // Rota de atualização
 router.put('/', checkToken, addUserId, controller.updateUsuario);
+
+// Rotas de atualização de aluno
+router.put('/atualizaraluno/:id', checkToken, controller.updateUsuarioAluno);
+
 //Rota Deletar
-router.delete('/', checkToken, addUserId, controller.deleteUsuario);
+router.delete('/delete', checkToken, addUserId, controller.deleteUsuario);
+
+//Rota Deletar Aluno
+router.delete('/deletaluno/:id', checkToken, controller.deleteUsuarioAluno);
 
 module.exports = router;

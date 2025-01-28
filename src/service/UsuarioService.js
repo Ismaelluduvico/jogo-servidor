@@ -10,6 +10,11 @@ exports.buscarUsuario = function (id) {
     return UsuarioData.buscarUsuario(id);
 };
 
+//Buscar usuario
+exports.buscarDetalheAluno = function (id) {
+    return UsuarioData.buscarDetalheAluno(id);
+};
+
 exports.buscarUsuarioAluno = function (tipo) {
     return UsuarioData.buscarUsuarioAluno(tipo);
 };
@@ -27,11 +32,15 @@ exports.updateUsuario = async function (params) {
     result
 }
 
-//exports.updateUsuario = function (dados) {
-//    return UsuarioData.updateUsuario(dados);
-//};
+exports.updateUsuarioAluno = function (dados) {
+    return UsuarioData.updateUsuarioAluno(dados);
+};
 
 exports.deleteUsuario = function (id) {
+    return UsuarioData.deleteUsuario(id);
+}
+
+exports.deleteUsuarioAluno = function (id) {
     return UsuarioData.deleteUsuario(id);
 }
 //serviço de adicionar um aluno

@@ -26,6 +26,17 @@ exports.buscarUsuario = async(req, res, next) => {
     }
 };
 
+//Buscar usuario Aluno
+exports.buscarDetalheAluno = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const usuario = await UsuarioService.buscarDetalheAluno(id)
+        res.json(usuario)
+    } catch (error) {
+        
+    }
+};
+
 exports.buscarUsuarioAluno = async(req, res, next) => {
     try {
         const {tipo} = req.params;
@@ -35,6 +46,7 @@ exports.buscarUsuarioAluno = async(req, res, next) => {
         
     }
 };
+
 //Alualizar usuario
 exports.updateUsuario = async(req, res, next) => {
     try {
@@ -50,12 +62,36 @@ exports.updateUsuario = async(req, res, next) => {
     }
 };
 
+//Alualizar usuario aluno
+exports.updateUsuarioAluno = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const dados = req.body;
+        await UsuarioService.updateUsuarioAluno({...dados, id: id});
+        return res.status(201).send();
+    } catch (error) {
+        res.status(500).send("ocorreu um erro")
+    }
+};
+
 //Deletar usuario
 exports.deleteUsuario = async(req, res, next) => {
     try {
         const {userId} = req.body;
         await UsuarioService.deleteUsuario(userId)
         res.status(200).send(`Requisição recebida com sucesso! ${userId}`);
+    } catch (error){
+        console.log(error)
+        res.status(500).send("ocorreu um erro")
+    }
+};
+
+//Deletar aluno 
+exports.deleteUsuarioAluno = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        await UsuarioService.deleteUsuario(id)
+        res.status(200).send(`Requisição recebida com sucesso! ${id}`);
     } catch (error){
         console.log(error)
         res.status(500).send("ocorreu um erro")

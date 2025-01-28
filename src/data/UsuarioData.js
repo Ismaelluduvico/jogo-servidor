@@ -25,6 +25,11 @@ exports.buscarUsuario = function (id) {
     return database.query(`select nomecompleto, nomeusuario, turma from usuarios where id = ${id}`)
 };
 
+//Pegar informações do usuario do aluno
+exports.buscarDetalheAluno = function (id) {
+    return database.query(`select id, nomecompleto, nomeusuario, turma from usuarios where id = ${id}`)
+};
+
 //Pegar informações dos usuarios Aluno
 exports.buscarUsuarioAluno = function (tipo) {
     return database.query('select * from usuarios where tipousuario = $1', [tipo])
@@ -57,7 +62,22 @@ exports.updateUsuario = function ({ id, nomeusuario, novasenha, turma, nomecompl
     });
 };
 
+//Atualizar usuario aluno 
+exports.updateUsuarioAluno = function ({ id, nomeusuario, turma, nomecompleto }) {
+
+    return database.query(`update usuarios set nomeusuario = '${nomeusuario}', turma = '${turma}', 
+                nomecompleto = '${nomecompleto}' where id = ${id}`).then(() => {
+        return { status: 200, msg: "Usuário atualizado com sucesso" };
+    }).catch(err => {
+        return { status: 500, msg: "Erro ao criar usuário", error: err };
+    });
+};
+
 exports.deleteUsuario = function (id) {
+    return database.query(`delete from usuarios where id = ${id} `)
+};
+
+exports.deleteUsuarioAluno = function (id) {
     return database.query(`delete from usuarios where id = ${id} `)
 };
 
