@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-    const { nomeusuario, senha, novasenha, turma, nomecompleto, userId} = req.body;
+    const { userId, senha, novasenha, ...updateParams } = req.body;
 
     const [result] = await UsuarioService.checkPasswordById(userId, senha);
 
@@ -38,15 +38,11 @@ exports.updateUser = async (req, res) => {
         res.status(401).json({ error: true, message: "Usuário ou senha inválidos" });
         return;
     }
-    const params = {
-        id: userId,
-        nomeusuario,
-        nomecompleto,
-        novasenha,
-        turma,
-        tipo: result.tipousuario
+
+    if (novasenha) {
+        updateParams.senha = novasenha;
     }
-    console.log(params)
-    await UsuarioService.updateUsuario(params);
+
+    await UsuarioService.updateUsuario(userId, updateParams);
     res.status(200).json({ success: true });
 }

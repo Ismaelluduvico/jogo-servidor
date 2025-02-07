@@ -44,16 +44,16 @@ exports.checkPasswordById = function (id, senha) {
     return database.query('select * from usuarios where id = $1 and senha = $2', [id, senha]);
 }
 //Atualizar usuario
-exports.updateUsuario = function ({ id, nomeusuario, novasenha, turma, nomecompleto, tipo }) {
-    return userNameExists(nomeusuario).then(res => {
+exports.updateUsuario = function (id, params) {
+    const fields = Object.keys(params).map(key => `${key} = '${params[key]}'`).join(', ');
+    return userNameExists(params.nomeusuario).then(res => {
         if (res && res !== id) {
             return { status: 400, msg: "Nome de usuario já existe" };
         } else {
-            return database.query(`update usuarios set nomeusuario = '${nomeusuario}', senha = '${novasenha}', turma = '${turma}', 
-                nomecompleto = '${nomecompleto}', tipousuario = '${tipo}' where id = ${id}`).then(() => {
+            return database.query(`update usuarios set ${fields} where id = ${id}`).then(() => {
                 return { status: 200, msg: "Usuário atualizado com sucesso" };
             }).catch(err => {
-                return { status: 500, msg: "Erro ao criar usuário", error: err };
+                return { status: 500, msg: "Erro ao atualizar usuário", error: err };
             });
         }
     }).catch(err => {

@@ -27,9 +27,14 @@ exports.checkPasswordById = function (id, senha) {
     return UsuarioData.checkPasswordById(id, senha);
 }
 
-exports.updateUsuario = async function (params) {
-    const result = await UsuarioData.updateUsuario(params);
-    result
+exports.updateUsuario = async function (id, params) {
+    if (params.novasenha) {
+        params.senha = params.novasenha;
+        delete params.novasenha;
+    }
+    const result = await UsuarioData.updateUsuario(id, params);
+    console.log(result);
+    return result;
 }
 
 exports.updateUsuarioAluno = function (dados) {
